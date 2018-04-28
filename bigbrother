@@ -1,0 +1,44 @@
+#!/bin/bash
+#enter the given location
+directory=$1
+cd $1
+
+if [[ -e lsfile ]] 	
+then
+	ls  > .lsfile2
+
+
+	while read -r p;
+		do
+
+
+		if [[ ! -e "$p" ]]
+			then
+			echo "File deleted: $p"
+		fi
+		
+	done < lsfile
+	while read -r p;
+		do
+		line=`echo $p`
+		temp=`grep "$line" lsfile`;
+		
+		if [[ -z "$temp" ]]	;
+		then
+
+			if [[ -d "$p" ]];
+			then
+				echo "Folder created: "$directory/"$p"
+			else
+ 				echo "File created: "$directory/"$p"
+			fi
+		fi
+	
+		
+	done < .lsfile2
+	ls  > lsfile
+	 
+else
+	echo "Welcome to the Big Brother"
+	ls  > lsfile
+fi
